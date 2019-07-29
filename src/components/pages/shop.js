@@ -26,7 +26,7 @@ export default class shop extends Component {
     }
 
     componentWillMount() {
-      axios.get(`http://46.101.236.211:8666/product/?search=redmi`)
+      axios.get(`http://46.101.236.211:8666/subcategory/${this.props.location.state.subId}`)
       .then(response => {
         this.setState({products: response.data});
         console.log(this.state.products);
