@@ -29,7 +29,6 @@ export default class Header extends Component {
 
     }
 
-
     componentDidMount() {
         axios.get('http://46.101.236.211:8666/category/')
             .then(response => {
