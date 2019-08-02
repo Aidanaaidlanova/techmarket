@@ -96,9 +96,7 @@ export default class Header extends Component {
                                                 className="cart_container d-flex flex-row align-items-center justify-content-end">
                                                 <div className="cart_icon">
                                                     <img src={cart}/>
-
                                                 </div>
-
                                             </div>
                                         </div>
                                     </Link>
