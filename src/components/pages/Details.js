@@ -10,6 +10,7 @@ import Header from '../header.js';
 import Footer from '../footer.js';
 import styled from "styled-components";
 import axios from 'axios';
+import Zoom from 'react-img-zoom';
 import { createBrowserHistory } from 'history';
 import "../plugins/fontawesome-free-5.0.1/css/fontawesome-all.css";
 import "../plugins/OwlCarousel2-2.2.1/owl.carousel.css";
@@ -53,7 +54,7 @@ componentWillMount() {
   axios.get(`http://46.101.236.211:8666/product/${this.props.location.state.proId}/`)
   .then(response => {
     this.setState({product: response.data});
-    console.log(this.state.product);
+    console.log("Детально",this.state.product);
 })
   .catch(error => {
     console.log(error);
@@ -72,22 +73,22 @@ render() {
 
         <div class="col-lg-2 order-lg-1 order-2">
         
-        {product.photos_for_product && product.photos_for_product.map((photo) =>{
+        {product.photo && product.photo.map((photo) =>{
             return(
               <ul class="image_list">
-               <li> <img src={photo.photo} alt=""/></li>
-               <li> <img src={photo.photo} alt=""/></li>
-               <li> <img src={photo.photo} alt=""/></li>
-        </ul>
+               <li> <img src={photo.image} alt=""/></li>
+               <li> <img src={photo.image} alt=""/></li>
+               <li> <img src={photo.image} alt=""/></li>
+              </ul>
         )})}
         </div>
 
 
         <div class="col-lg-5 order-lg-2 order-1">
         <div class="image_selected">            
-        {product.photos_for_product &&  product && product.photos_for_product.map((photo) =>{
+        {product.photo && product.photo.map((photo) =>{
             return(
-              <img src={photo.photo} alt=""/>)})}</div>
+              <Zoom img={photo.image} zoomScale={3} width={500} height={500}/>)})}</div>
         </div>
 
 

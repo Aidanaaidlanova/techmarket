@@ -62,7 +62,7 @@ export default class shop extends Component {
               <div class="product_border"></div>
               <div class="product_image d-flex flex-column align-items-center justify-content-center">
 
-              {product.photos_for_product.map((photo) =>{
+              {product.photo.map((photo) =>{
                 return(
                   <img src={photo.photo} alt=""/>)})}
               </div>

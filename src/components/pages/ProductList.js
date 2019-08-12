@@ -70,9 +70,9 @@ export default class ProductList extends Component {
               <div class="product_border"></div>
               <div class="product_image d-flex flex-column align-items-center justify-content-center">
 
-              {product.photos_for_product.map((photo) =>{
+              {product.photo.map((photo) =>{
                 return(
-                  <img src={photo.photo} alt="" onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}}); 
+                  <img src={photo.image} alt="" onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}}); 
                                                                                                     history.go(`/details/${product.id}/`)}}/>)})}
               </div>
               <div class="product_content">
