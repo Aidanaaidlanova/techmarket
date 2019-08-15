@@ -26,6 +26,8 @@ export default class Details extends Component {
    constructor(props) {
     super(props);
     this.state = {
+        loading: false,
+        selectImageNumber: 0,
         product: [{
           id: 1,
           name: "Xiaomi a2",
@@ -53,7 +55,7 @@ export default class Details extends Component {
 componentWillMount() {
   axios.get(`http://46.101.236.211:8666/product/${this.props.location.state.proId}/`)
   .then(response => {
-    this.setState({product: response.data});
+    this.setState({product: response.data,loading: true});
     console.log("Детально",this.state.product);
 })
   .catch(error => {
@@ -61,8 +63,43 @@ componentWillMount() {
 });
 
 }
+
+changeImage() {
+  this.setState({
+    loading: true
+  })
+}
+
+selectImage(e) {
+  this.setState({
+    selectImageNumber: Number(e.target.alt),
+    loading: false,
+  })
+  setTimeout(() => {
+    this.changeImage();
+  },100)
+  console.log(this.state)
+}
+
+addInBasket() {
+  if(localStorage.getItem("myChoice") === null) {
+    const data = this.state.product;
+    const arr = [];
+    arr.push(data);
+    const strarr = JSON.stringify(arr);
+    localStorage.setItem("myChoice",strarr);
+  }
+  const data = localStorage.getItem("myChoice");
+  localStorage.clear();
+  const arrdata = JSON.parse(data);
+  arrdata.push(this.state.product);
+  const strarr = JSON.stringify(arrdata);
+  localStorage.setItem("myChoice",strarr);
+}
+
 render() {
     let product = this.state.product;
+    const { loading,selectImageNumber } = this.state;
     return (
       
         <div>
@@ -72,23 +109,25 @@ render() {
         <div class="row">
 
         <div class="col-lg-2 order-lg-1 order-2">
-        
-        {product.photo && product.photo.map((photo) =>{
+        <ul class="image_list">
+          {product.photo && product.photo.map((photo,idx) =>{
             return(
-              <ul class="image_list">
-               <li> <img src={photo.image} alt=""/></li>
-               <li> <img src={photo.image} alt=""/></li>
-               <li> <img src={photo.image} alt=""/></li>
-              </ul>
-        )})}
+            <li key={idx}> <img onClick={(e) => this.selectImage(e)} src={photo.image} alt={idx}/></li>
+          )})}
+        </ul>
         </div>
 
 
         <div class="col-lg-5 order-lg-2 order-1">
         <div class="image_selected">            
-        {product.photo && product.photo.map((photo) =>{
+        {/* {product.photo && product.photo.map((photo) =>{
             return(
-              <Zoom img={photo.image} zoomScale={3} width={500} height={500}/>)})}</div>
+              <Zoom img={photo.image} zoomScale={2} width={400} height={400}/>)
+              
+              <img src={this.state.product.photo[selectImageNumber].image} />
+        })} */}
+        {loading ? <Zoom img={this.state.product.photo[selectImageNumber].image} zoomScale={2} width={400} height={400}/> : <p>Загрузка</p>}
+        </div>
         </div>
 
 
@@ -101,8 +140,8 @@ render() {
         <div class="clearfix">
         <div class="product_price">{product.wholesale_price}сом</div>
         <div class="button_container">
-        <button type="button" class=" cart_button" onClick ={() => {history.push({pathname:`/cart`,state: {proId: product.id}}); 
-                                                                                                    history.go(`/cart`)}}>В корзину</button>
+        {/* () => {history.push({pathname:`/cart`,state: {proId: product.id}}); history.go(`/cart`)} */}
+        <button type="button" class="cart_button" onClick={() => this.addInBasket()}>В корзину</button>
         <div class="product_fav"><i class="fas fa-heart"></i></div>
         </div>
         </div>

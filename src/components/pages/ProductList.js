@@ -16,8 +16,9 @@ export default class ProductList extends Component {
   constructor() {
     super();
     this.state = {
-      products: []};
-    }
+      products: [],
+    };
+  }
   
     componentWillMount() {
       axios.get(`http://46.101.236.211:8666/product/`)
@@ -35,9 +36,6 @@ export default class ProductList extends Component {
     }
 
   render() {
-  
-                
-
     return (
     <body>
       <React.Fragment>
