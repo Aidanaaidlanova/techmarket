@@ -1,4 +1,5 @@
-import React, {Component} from "react";
+ import React, {Component} from "react";
+ import {Link, withRouter} from "react-router-dom";
 import Product from "../Product";
 import {ProductConsumer} from "../../context";
 import styled from "styled-components";
@@ -11,30 +12,50 @@ import axios from 'axios';
 import { createBrowserHistory } from 'history';
 const history = createBrowserHistory();
 
-export default class Search extends Component {
+class Search extends Component {
   constructor() {
     super();
 
     this.state = {
 
-      results:[]
+      results:[],
+      loading: true
 
       };
 
+    this.search = this.search.bind(this);
+
     }
 
-     ccomponentWillMount() {
-      axios.get(`http://46.101.236.211:8666/product/?search=redmi`)
+    search() {
+      axios.get(`http://46.101.236.211:8666/product/?search=${this.props.location.state}`)
       .then(response => {
-        this.setState({results: response.data});
+        this.setState({results: response.data, loading: false});
         console.log(this.state.results);
       })
       .catch(error => {
         console.log(error);
-      });
+      }) 
     }
 
+  componentDidMount(){  
+      this.search();
+      
+  };
+
+  componentDidUpdate(nextProps) {
+    if(nextProps.location.state !== this.props.location.state)
+    {
+     this.search();
+     console.log("Props", nextProps.location.state);
+     console.log("StateProps", this.props.location.state);
+    }
+    
+  }
+      
+    
     render() {
+      console.log(this.props.location.state);
       return (
         <body>
         <React.Fragment>
@@ -51,16 +72,16 @@ export default class Search extends Component {
         <div className="container">
             <div className="row">
         {
-          this.state.results.map((product)=> {
+           this.state.results && this.state.results.map((product)=> {
             return (
               <div class="product_item is_new" key={product.id} onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}}); 
                                                                                                     history.go(`/details/${product.id}/`)}}>
               <div class="product_border"></div>
               <div class="product_image d-flex flex-column align-items-center justify-content-center">
 
-              {product.photos_for_product.map((photo) =>{
+              {product.photo.map((photo) =>{
                 return(
-                  <img src={photo.photo} alt=""/>)})}
+                  <img src={photo.image} alt=""/>)})}
               </div>
               <div class="product_content">
               <div class="product_price">{product.wholesale_price} сом</div>
@@ -97,4 +118,4 @@ export default class Search extends Component {
     }
 
 
-    
+export default withRouter(Search); 

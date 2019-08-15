@@ -1328,7 +1328,12 @@ select option
 	font-size: 12px;
 	color: rgba(0,0,0,0.5);
 }
-
+.product_name
+{
+	font-size: 30px;
+	font-weight: 500;
+	margin-top: 11px;
+}
 .product_rating
 {
 	margin-top: 7px;
@@ -1604,7 +1609,15 @@ select option
 {
 	color: #df3b3b;
 }
-
+.otzyv{
+	max-width: 54%;
+	margin-left: 4%;
+	font-family: 'Rubik', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+    color: #828282;
+}
 /*********************************
 6. Recently Viewed
 *********************************/

@@ -11,11 +11,8 @@ import Footer from '../footer.js';
 import styled from "styled-components";
 import axios from 'axios';
 import { createBrowserHistory } from 'history';
+import {Form, Button} from 'react-bootstrap';
 import "../plugins/fontawesome-free-5.0.1/css/fontawesome-all.css";
-import "../plugins/OwlCarousel2-2.2.1/owl.carousel.css";
-import "../plugins/OwlCarousel2-2.2.1/owl.theme.default.css";
-import "../plugins/OwlCarousel2-2.2.1/animate.css";
-import "../plugins/slick-1.8.0/slick.css";
 import "../styles/bootstrap4/bootstrap.min.css";
 import "../styles/product_styles.css";
 import "../styles/product_responsive.css";
@@ -46,11 +43,13 @@ export default class Details extends Component {
       ],
       popular: null
   }
-  ]
+  ],
+  feedback:" ",
 }
 }
-componentWillMount() {
-  axios.get(`http://46.101.236.211:8666/product/${this.props.location.state.proId}/`)
+
+getItem = () => {
+   axios.get(`http://46.101.236.211:8666/product/${this.props.location.state.proId}/`)
   .then(response => {
     this.setState({product: response.data});
     console.log(this.state.product);
@@ -58,26 +57,60 @@ componentWillMount() {
   .catch(error => {
     console.log(error);
 });
-
 }
+
+ componentWillMount() {
+  this.getItem();
+}
+ 
+  handleChange = event => {
+    this.setState({ feedback: event.target.value });
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+
+    const comment = {
+      "product": this.state.product.id,
+      "comment": this.state.feedback,
+      "name": "Anonymous author",
+      "mark": 5
+     
+
+    };
+    console.log(comment);
+
+      fetch(`http://46.101.236.211:8666/comment/`, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(comment),
+            })
+      .then(res=>{console.log("OK"); this.getItem()})
+      .catch(er=>{console.log("Not OK")});
+
+    
+      }
+
 render() {
     let product = this.state.product;
     return (
       
         <div>
-<Header/>
+        <Header/>
         <div class="single_product">
         <div class="container">
         <div class="row">
 
         <div class="col-lg-2 order-lg-1 order-2">
         
-        {product.photos_for_product && product.photos_for_product.map((photo) =>{
+        {product.photo && product.photo.map((photo) =>{
             return(
               <ul class="image_list">
-               <li> <img src={photo.photo} alt=""/></li>
-               <li> <img src={photo.photo} alt=""/></li>
-               <li> <img src={photo.photo} alt=""/></li>
+               <li> <img src={photo.image} alt=""/></li>
+               <li> <img src={photo.image} alt=""/></li>
+               <li> <img src={photo.image} alt=""/></li>
         </ul>
         )})}
         </div>
@@ -85,9 +118,9 @@ render() {
 
         <div class="col-lg-5 order-lg-2 order-1">
         <div class="image_selected">            
-        {product.photos_for_product &&  product && product.photos_for_product.map((photo) =>{
+        {product.photo &&  product && product.photo.map((photo) =>{
             return(
-              <img src={photo.photo} alt=""/>)})}</div>
+              <img src={photo.image} alt=""/>)})}</div>
         </div>
 
 
@@ -96,6 +129,7 @@ render() {
         <div class="product_name">{product.name}</div>
         <div class="product_text"><p>{product.description}</p></div>
         <div class="order_info d-flex flex-row">
+        
         <form action="#">
         <div class="clearfix">
         <div class="product_price">{product.wholesale_price}сом</div>
@@ -106,11 +140,78 @@ render() {
         </div>
         </div>
         </form>
+
         </div>
         </div>
         </div>
 
+        
+
         </div>
+        <div class="reviews">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          
+          <div class="reviews_title_container">
+            <h3 class="reviews_title">Отзывы</h3>
+            <div class="reviews_all ml-auto"></div>
+          </div>
+
+          <div class="reviews_slider_container">
+            
+         {product.comments &&  product && product.comments.map((com) =>{
+            return(
+            <div class="owl-carousel owl-theme reviews_slider">
+              <div class="owl-item">
+                <div class="review d-flex flex-row align-items-start justify-content-start">
+                  <div><div class="review_image"></div></div>
+                  <div class="review_content">
+                    <div class="review_name">{com.name}</div>
+                    <div class="review_text"><p>{com.comment}</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            )})}
+            <div class="reviews_dots"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+        
+<div class="contact_form">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+          <div class="contact_form_container">
+            <div class="contact_form_title">Оставьте отзыв об этом продукте.</div>
+
+            <form action="#" id="contact_form" onSubmit={this.handleSubmit}>
+              <div class="contact_form_inputs d-flex flex-md-row flex-column justify-content-between align-items-between">
+              </div>
+              <div class="contact_form_text">
+                <textarea id="contact_form_message" 
+                          class="text_field contact_form_message" 
+                          name="feedback" 
+                          rows="4" 
+                          placeholder="Отзыв" 
+                          required="required" 
+                          data-error="Please, write us a message." 
+                          onChange={this.handleChange}></textarea>
+              </div>
+              <div class="contact_form_button">
+                <button type="submit" class="button contact_submit_button">Добавить</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+        
         </div>
         </div>
 <Footer/>

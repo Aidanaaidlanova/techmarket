@@ -1,3 +1,4 @@
+
 @charset "utf-8";
 /* CSS Document */
 
@@ -1672,7 +1673,7 @@ select option
 {
 	display: block;
 	position: relative;
-	max-width: 100%;
+	max-width: 100px;
 }
 .product_content
 {
@@ -3035,7 +3036,7 @@ select option
 .reviews
 {
 	padding-top: 96px;
-	padding-bottom: 125px;
+	
 }
 .reviews_title_container
 {
@@ -3113,6 +3114,7 @@ select option
 .review_text
 {
 	margin-top: 12px;
+	color: #0e8ce4;
 }
 .review_text p:last-child
 {

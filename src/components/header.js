@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import "./plugins/fontawesome-free-5.0.1/css/fontawesome-all.css";
 import "./styles/bootstrap4/bootstrap.min.css";
 import "./styles/contact_responsive.css";
@@ -9,7 +9,8 @@ import cart from './images/cart.png';
 import axios from 'axios';
 import { createBrowserHistory } from 'history';
 const history = createBrowserHistory();
-export default class Header extends Component {
+
+class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +23,7 @@ export default class Header extends Component {
                             name: "Meizu"
                         }],
             }],
-            query:" redmi"
+            query:""
 
 
         }
@@ -41,14 +42,21 @@ export default class Header extends Component {
             });
     }
 
-        handleInputChange = () => {
-            this.setState({
-              query: this.search.value
-            })
-          }
+        handleChange = (e) => {
+            this.setState({query: e.target.value});
+        }
+
+        search = (e) => {
+            e.preventDefault();
+            const key = e.target.elements.key.value;
+            console.log("key", key)
+            this.props.history.push("/search", key);
+            console.log(this.state.query);
+        }
 
     render() {
         console.log(this.state.categories);
+        
         return (
             <header className="header">
                 <div className="header_main">
@@ -67,14 +75,13 @@ export default class Header extends Component {
                                 <div className="header_search">
                                     <div className="header_search_content">
                                         <div className="header_search_form_container">
-                                            <form action="#" className="header_search_form clearfix">
+                                            <form onSubmit={this.search} className="header_search_form clearfix">
                                                 <input type="search" required="required"
-                                                       className="header_search_input"  ref={input => this.search = input}
-          onChange={this.handleInputChange}/>
+                                                       className="header_search_input"  name="key"/>
 
                                                 <button type="submit" className="header_search_button trans_300"
-                                                        value="Submit"><img src={search} onClick ={() => {history.push({pathname:`/search`,state: {search: this.state.query}}); 
-                                                                                                    history.go(`/search`)}}/></button>
+                                                        value="Submit"><img src={search} /></button>
+
                                             </form>
                                         </div>
                                     </div>
@@ -171,3 +178,5 @@ export default class Header extends Component {
     }
 
 }
+
+export default withRouter(Header);

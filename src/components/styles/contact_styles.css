@@ -1264,24 +1264,18 @@ select option
 4.1 Contact Form
 *********************************/
 
-.contact_form
-{
-	padding-top: 85px;
-}
+
 .contact_form_container
 {
 
 }
 .contact_form_title
 {
-	font-size: 30px;
+	font-size: 25px;
 	font-weight: 500;
 	margin-bottom: 37px;
 }
-.contact_form_inputs
-{
-	margin-bottom: 30px;
-}
+
 .input_field
 {
 	width: calc((100% - 60px) / 3);
