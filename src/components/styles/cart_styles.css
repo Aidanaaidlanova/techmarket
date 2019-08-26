@@ -1225,7 +1225,7 @@ select option
 }
 .cart_items
 {
-	margin-top: 67px;
+	margin-top: 27px;
 }
 .cart_list
 {
@@ -1240,8 +1240,8 @@ select option
 }
 .cart_item_image
 {
-	width: 133px;
-	height: 133px;
+	width: 90px;
+	height: 90px;
 	float: left;
 }
 .cart_item_image img
@@ -1260,6 +1260,7 @@ select option
 }
 .cart_item_title
 {
+	margin-left: 15px;
 	text-align: left;
 	font-size: 14px;
 	font-weight: 400;
@@ -1270,13 +1271,14 @@ select option
 
 	text-align: left;
 	font-size: 18px;
-	margin-top: 30px;
+	margin-top: 15px;
 }
 .cart_item_text
-{
+{	
+	width: 120px;
 	text-align: center;
 	font-size: 18px;
-	margin-top: 35px;
+	margin-top: 15px;
 }
 .cart_item_text span
 {
@@ -1290,6 +1292,10 @@ select option
 	-ms-transform: translateY(4px);
 	-o-transform: translateY(4px);
 	transform: translateY(4px);
+}
+.trash
+{
+	cursor: pointer;
 }
 .cart_item_price
 {

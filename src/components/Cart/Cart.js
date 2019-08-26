@@ -12,47 +12,108 @@ import Footer from '../footer.js';
 import "../styles/contact_responsive.css";
 import "../styles/contact_styles.css";
 import "../styles/blog_styles.css";
+import "../styles/cart_styles.css";
+import "../styles/bootstrap4/bootstrap.min.css";
+import "../styles/cart_responsive.css";
 export default class Store extends Component {
+ constructor() {
+    super();
+    this.state = {
+      choice: []};
+    }
+  componentWillMount(){
+
+   this.setState({choice: JSON.parse(window.localStorage.getItem('myChoice'))}) ;
+   console.log(this.state.choice);
+
+
+  }
+
+  RemovefromBasket() {
+  localStorage.removeItem("myChoice");
+}
 
   render() {
     return (
     <body>
           <Header/>
- 
-        <ProductConsumer>
-          {value => {
-            const { cart } = value;
-            if (cart.length > 0) {
-              return (
-                <React.Fragment>
-                <div class="cart_section">
-               <div class="container">
+          <div class="cart_section">
+          <div class="container">
             <div class="row">
               <div class="col-lg-10 offset-lg-1">
                 <div class="cart_container">
                   <div class="cart_title">Корзина</div>
+                  
 
-            <div class="cart_items">
-              
-                           <CartList value={value}/>
-                            </div>
-                    <div class="cart_buttons">
-                   <Link to="/" ><button type="button" class="button cart_button_clear">Назад</button></Link>
-                   <Link to="/order"> <button type="button" class="button cart_button_checkout">Оформить заказ</button></Link>
-                  </div>
-                </div>
+      {
+           this.state.choice && this.state.choice.map((product)=> {
+            return (
+        <div class="cart_items" key={product.id}>
+              <ul class="cart_list">
+                <li class="cart_item clearfix">
+                  <div class="cart_item_image"><img src={product.photo[0] && product.photo[0].image }/></div>
+                  <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+                    <div class="cart_item_name cart_info_col">
+                      <div class="cart_item_text">{product.name}</div>
+                    </div>
+                    
+
+                    <div class="cart_item_quantity cart_info_col">
+                      
+                      <div class = "cart_item_count">
+            
+              <div >
+                <span
+                  className="btn btn-black mx-1"
+                 
+                  
+                >
+                  -
+                </span>
+                <span className="btn btn-black mx-1">1</span>
+                <span
+                  className="btn btn-black mx-1"
+                 
+                
+                >
+                  +
+                </span>
               </div>
+            
+        </div>
+                    </div>
+                    <div class="cart_item_price cart_info_col">
+                    <div className=" cart_item_text trash" onClick={() => this.RemovefromBasket()}>
+                              <i className="fas fa-trash"/>
+                    </div>
+                    </div>
+                    <div class="cart_item_price cart_info_col">
+                      <div class="cart_item_text">{product.wholesale_price} сом </div>
+                    </div>
+                    
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+              )}
+
+
+
+            )
+
+
+        }
+            <div class="cart_buttons">
+             <Link to="/" ><button type="button" class="button cart_button_clear">Назад</button></Link>
+             <Link to="/order"> <button type="button" class="button cart_button_checkout">Оформить заказ</button></Link>
             </div>
           </div>
         </div>
-                  
-                </React.Fragment>
-              );
-            } else {
-              return <EmptyCart />;
-            }
-          }}
-        </ProductConsumer>
+      </div>
+    </div>
+  </div>
+ 
         <Footer/>
     </body>
     );
