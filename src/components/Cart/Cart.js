@@ -19,19 +19,38 @@ export default class Store extends Component {
  constructor() {
     super();
     this.state = {
-      choice: []};
-    }
-  componentWillMount(){
+      choice: [],
+      productKeys: [],
+    };
+ }
 
-   this.setState({choice: JSON.parse(window.localStorage.getItem('myChoice'))}) ;
-   console.log(this.state.choice);
-
-
+  getFromStorage() {
+    const productKeys = JSON.parse(localStorage.getItem('productKeys'));
+    const productArr = [];
+    productKeys.map((item,idx) => {
+      productArr.push(JSON.parse(localStorage.getItem(`productNumber${item}`)));
+    })
+    console.log("МАШ МаССИВ ЕБАТЬ", productArr);
+    this.setState({
+      choice: productArr,
+      productKeys: productKeys
+    })
   }
 
-  RemovefromBasket() {
-  localStorage.removeItem("myChoice");
-}
+  componentDidMount(){
+   this.getFromStorage();
+  }
+
+  RemovefromBasket(e) {
+    const id = e.target.id;
+    localStorage.removeItem(`productNumber${id}`);
+    const arr = this.state.productKeys;
+    arr.splice(arr.indexOf(id),1)
+    const newArr = JSON.stringify(arr);
+    localStorage.removeItem('productKeys');
+    localStorage.setItem('productKeys',newArr);
+    this.getFromStorage();
+  }
 
   render() {
     return (
@@ -83,8 +102,8 @@ export default class Store extends Component {
         </div>
                     </div>
                     <div class="cart_item_price cart_info_col">
-                    <div className=" cart_item_text trash" onClick={() => this.RemovefromBasket()}>
-                              <i className="fas fa-trash"/>
+                    <div id={product.id} className=" cart_item_text trash" onClick={(e) => this.RemovefromBasket(e)}>
+                              <i id={product.id} className="fas fa-trash"/>
                     </div>
                     </div>
                     <div class="cart_item_price cart_info_col">
