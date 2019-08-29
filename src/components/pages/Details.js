@@ -113,20 +113,42 @@ selectImage(e) {
   console.log(this.state)
 }
 
+//   if(localStorage.getItem("myChoice") === null) {
+//   const data = this.state.product;
+//   const arr = [];
+//   arr.push(data);
+//   const strarr = JSON.stringify(arr);
+//   localStorage.setItem("myChoice",strarr);
+// }
+// else {const data = localStorage.getItem("myChoice");
+//   localStorage.clear();
+//   const arrdata = JSON.parse(data);
+//   arrdata.push(this.state.product);
+//   const strarr = JSON.stringify(arrdata);
+//   localStorage.setItem("myChoice",strarr);}
+
 addInBasket() {
-  if(localStorage.getItem("myChoice") === null) {
-    const data = this.state.product;
-    const arr = [];
-    arr.push(data);
-    const strarr = JSON.stringify(arr);
-    localStorage.setItem("myChoice",strarr);
+  if(localStorage.getItem(`productNumber${this.state.product.id}`)) {
+    alert('такой есть')
   }
-  else {const data = localStorage.getItem("myChoice");
-  localStorage.clear();
-  const arrdata = JSON.parse(data);
-  arrdata.push(this.state.product);
-  const strarr = JSON.stringify(arrdata);
-  localStorage.setItem("myChoice",strarr);}
+  else {
+    const data = JSON.stringify(this.state.product);
+    localStorage.setItem(`productNumber${this.state.product.id}`,data);
+    if(localStorage.getItem('productKeys') === null) {
+      const numberArr = [];
+      numberArr.push(this.state.product.id);
+      const strNumberArr = JSON.stringify(numberArr);
+      localStorage.setItem('productKeys',strNumberArr);
+    }
+    else {
+      const data = localStorage.getItem('productKeys');
+      const numberArr = JSON.parse(data);
+      numberArr.push(this.state.product.id);
+      const strNumberArr = JSON.stringify(numberArr);
+      localStorage.removeItem('productKeys')
+      localStorage.setItem('productKeys',strNumberArr);
+    }
+  }
 }
 
 render() {
