@@ -47,7 +47,8 @@ export default class Details extends Component {
   ],
   feedback:" ",
   loading: false,
-  selectImageNumber: 0
+  selectImageNumber: 0,
+  added: false,
 }
 }
 
@@ -127,9 +128,9 @@ selectImage(e) {
 //   const strarr = JSON.stringify(arrdata);
 //   localStorage.setItem("myChoice",strarr);}
 
-addInBasket() {
+addInBasket(e) {
   if(localStorage.getItem(`productNumber${this.state.product.id}`)) {
-    alert('такой есть')
+
   }
   else {
     const data = JSON.stringify(this.state.product);
@@ -153,7 +154,7 @@ addInBasket() {
 
 render() {
     let product = this.state.product;
-    const { loading,selectImageNumber } = this.state;
+    const { loading,selectImageNumber,added } = this.state;
     return (
       
         <div>
@@ -163,7 +164,7 @@ render() {
         <div class="row">
 
  <div class="col-lg-2 order-lg-1 order-2">
-        <ul class="image_list">
+        <ul class="image_list image_list__overflow">
           {product.photo && product.photo.map((photo,idx) =>{
             return(
             <li key={idx}> <img onClick={(e) => this.selectImage(e)} src={photo.image} alt={idx}/></li>
@@ -189,7 +190,7 @@ render() {
         <div class="clearfix">
         <div class="product_price">{product.wholesale_price}сом</div>
         <div class="button_container">
-         <button type="button" class="cart_button" onClick={() => this.addInBasket()}>В корзину</button>
+         <button type="button" class="cart_button" onClick={(e) => this.addInBasket(e)}>В корзину</button>
         <div class="product_fav"><i class="fas fa-heart"></i></div>
         </div>
         </div>
