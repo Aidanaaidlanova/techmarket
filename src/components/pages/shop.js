@@ -38,6 +38,7 @@ export default class shop extends Component {
     }
 
 
+
     render() {
       return (
         <body>
@@ -54,17 +55,15 @@ export default class shop extends Component {
 
         <div className="container">
             <div className="row">
+           
         {
           this.state.products && this.state.products.product &&  this.state.products.product.map((product)=> {
             return (
-              <div class="product_item is_new" key={product.id} onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}}); 
-                                                                                                    history.go(`/details/${product.id}/`)}}>
+              <div class="product_item is_new" key={product.id} >
               <div class="product_border"></div>
               <div class="product_image d-flex flex-column align-items-center justify-content-center">
 
-              {product.photo.map((photo) =>{
-                return(
-                  <img src={photo.image} alt=""/>)})}
+               <img src={product.photo[0] && product.photo[0].image } />
               </div>
               <div class="product_content">
               <div class="product_price">{product.wholesale_price} сом</div>
@@ -72,7 +71,8 @@ export default class shop extends Component {
               </div>
              
               <div>
-                          <button class="button"><a href="">Добавить в корзину</a></button>
+                          <button onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}}); 
+                                                                                                    history.go(`/details/${product.id}/`)}} class="button"><a href="">Подробнее</a></button>
                         </div>
               </div>
               

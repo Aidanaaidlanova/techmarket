@@ -16,25 +16,27 @@ export default class order extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            order: [{
-                name: "Alice",
-                phone: "+996555444111",
-                email: "alice@mail.com",
-                address: "Pushkin st.-22",
-                product_list_items: [{
-                    product: 1,
-                    count: 2
+            name: "Alice",
+            phone: "+996555444111",
+            email: "alice@mail.com",
+            address: "Pushkin st.-22",
+            product_list_items: [{
+                    product: this.props.location.state.prodId,
+                    count: 1
                 }],
                 comment: "",
                 delivery: 1,
                 total_sum: "10000"
-            }
-            ]
+           
         }
     }
 
+    componentDidMount() {
+        
+    }
+
     handleChange = event => {
-        this.setState({name: event.target.value});
+        this.setState({[event.target.name]: event.target.value});
     }
 
     handleSubmit = event => {
@@ -45,19 +47,25 @@ export default class order extends Component {
             email: this.state.email,
             address: this.state.address,
             phone: this.state.phone,
-            products: this.state.phone,
+            product_list_items: this.state.product_list_items,
             comment: this.state.comment,
             delivery: this.state.delivery,
             total_sum: this.state.total_sum
 
         };
-
-        axios.post(`http://46.101.236.211:8666/storage/cheque/`, {order})
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
+    fetch(`http://46.101.236.211:8666/storage/cheque/`, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(order),
             })
-    }
+      .then(res=>Swal.fire({text: `Ваш заказ оформлен. Ожидайте письмо на почту.`}))
+      .catch(er=>{console.log("Not OK")});
+
+    
+      }
+
 
     render() {
         return(
@@ -75,7 +83,11 @@ export default class order extends Component {
                 <div class="single_post">
                     <div class="container">
                         <div class="row">
+
                             <div class="col-lg-8 offset-lg-2">
+                            <h4> Инструкция по оформлению заказа</h4>
+                            <p> Пожалуйста проверьте все данные при оформлении доставки, введите верный номер и адрес доставки (при введении неправильного номера или же адреса мы не несем ответственность за дотавку заказа). В комментариях можете ввеси дополнительную информацию к доставке. </p>
+
                                 <div class="single_post_title"></div>
                                 <Form onSubmit={this.handleSubmit}>
                                     <Form.Label>ФИО</Form.Label>
@@ -102,13 +114,15 @@ export default class order extends Component {
                                                   name="phone"
                                                   onChange={this.handleChange}/>
                                     <br/>
-                                    <Form.Label>Комментраий</Form.Label>
+                                    <Form.Label>Комментраии</Form.Label>
                                     <br/>
                                     <Form.Control type="text" 
                                                   placeholder="Привезти после 18:00" 
                                                   name="comment"
                                                   onChange={this.handleChange}/>
                                     <br/>
+                                    <Form.Label></Form.Label>
+
                                     <Button variant="primary" 
                                             type="submit">
                                         Оформить заказ

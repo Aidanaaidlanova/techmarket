@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import Product from "../Product";
 import { storeProducts } from "../../data";
@@ -16,8 +15,9 @@ export default class ProductList extends Component {
   constructor() {
     super();
     this.state = {
-      products: []};
-    }
+      products: [],
+    };
+  }
   
     componentWillMount() {
       axios.get(`http://46.101.236.211:8666/product/`)
@@ -33,6 +33,16 @@ export default class ProductList extends Component {
       console.log("a", arr);
       
     }
+
+  startSort() {
+    const arr = this.state.products.sort((a,b) => {
+      return a.retail_price - b.retail_price;
+    })
+    this.setState({
+      products: arr
+    })
+  }
+
 
   render() {
   
@@ -63,6 +73,10 @@ export default class ProductList extends Component {
 
 <div className="container">
             <div className="row">
+            <div className="col-12 p-0 m-2 d-flex justify-content-flex-start align-item-center ml-0 mr-0">
+              <h3 className="m-0 mr-2">Сортировка</h3>
+              <button className="btn btn-primary" onClick={() => this.startSort()}>По цене</button>
+            </div>
         {
            this.state.products.map((product)=> {
             return (
@@ -74,9 +88,13 @@ export default class ProductList extends Component {
                                                                                                     history.go(`/details/${product.id}/`)}}/>
               </div>
               <div class="product_content">
-              <div class="product_price">{product.wholesale_price} сом </div>
+              <div class="product_price">{product.retail_price} сом </div>
               <div class="product_name"><div><a href="#" tabindex="0">{product.name}</a></div></div>
               </div>
+              <ul class="product_marks">
+                  <li class="product_mark product_discount">-25%</li>
+                  
+                </ul>
               <div>
                           <button class="button" onClick ={() => {history.push({pathname:`/cart/${product.id}/`,state: {proId: product.id}})}}><a href="">Добавить в корзину</a></button>
                         </div>
@@ -104,4 +122,3 @@ export default class ProductList extends Component {
     )
 }
   }
-  
