@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Title from "../Title";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import CartColumns from "./CartColumns";
 import CartList from "./CartList";
 import CartTotals from "./CartTotals";
@@ -15,7 +15,7 @@ import "../styles/blog_styles.css";
 import "../styles/cart_styles.css";
 import "../styles/bootstrap4/bootstrap.min.css";
 import "../styles/cart_responsive.css";
-export default class Store extends Component {
+class Store extends Component {
  constructor() {
     super();
     this.state = {
@@ -39,13 +39,15 @@ export default class Store extends Component {
 
   componentDidMount(){
    this.getFromStorage();
+
   }
 
   RemovefromBasket(e) {
     const id = e.target.id;
     localStorage.removeItem(`productNumber${id}`);
     const arr = this.state.productKeys;
-    arr.splice(arr.indexOf(id),1)
+    delete arr.indexOf(id);
+    console.log("DELETED",arr)
     const newArr = JSON.stringify(arr);
     localStorage.removeItem('productKeys');
     localStorage.setItem('productKeys',newArr);
@@ -53,7 +55,8 @@ export default class Store extends Component {
   }
 
   render() {
-    return (
+
+  return (
     <body>
           <Header/>
           <div class="cart_section">
@@ -125,7 +128,12 @@ export default class Store extends Component {
         }
             <div class="cart_buttons">
              <Link to="/" ><button type="button" class="button cart_button_clear">Назад</button></Link>
-             <Link to="/order"> <button type="button" class="button cart_button_checkout">Оформить заказ</button></Link>
+             <Link to={{
+               pathname: '/order',
+               state: {
+                 prodId: this.state.choice.map(id=>id.subcategory.id)
+               }
+             }}> <button type="button" class="button cart_button_checkout">Оформить заказ</button></Link>
             </div>
           </div>
         </div>
@@ -138,3 +146,5 @@ export default class Store extends Component {
     );
   }
 }
+
+export default Store;

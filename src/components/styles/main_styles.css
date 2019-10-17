@@ -64,8 +64,8 @@ div
 	display: block;
 	position: relative;
 	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 ul
 {
@@ -118,11 +118,11 @@ p a:hover::after
 }
 ::selection
 {
-	
+
 }
 p::selection
 {
-	
+
 }
 h1{font-size: 48px;}
 h2{font-size: 36px;}
@@ -137,14 +137,14 @@ h1, h2, h3, h4, h5, h6
 	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
-h1::selection, 
-h2::selection, 
-h3::selection, 
-h4::selection, 
-h5::selection, 
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
 h6::selection
 {
-	
+
 }
 .form-control
 {
@@ -582,15 +582,15 @@ section
 	line-height: 50px;
 	color: #a3a3a3 !important;
 }
-.header_search_input::-moz-placeholder /* Firefox 19+ */ 
+.header_search_input::-moz-placeholder /* Firefox 19+ */
 {
 	font-size: 16px !important;
 	font-weight: 300;
 	line-height: 50px;
 	color: #a3a3a3 !important;
-} 
+}
 .header_search_input:-ms-input-placeholder
-{ 
+{
 	font-size: 16px !important;
 	font-weight: 300;
 	line-height: 50px;
@@ -650,7 +650,7 @@ section
 }
 .custom_dropdown_placeholder i
 {
-	
+
 }
 .custom_list
 {
@@ -915,10 +915,10 @@ select option
 	background: #FFFFFF;
 	box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
 	-webkit-transition: opacity 0.3s ease;
-    -moz-transition: opacity 0.3s ease;
-    -ms-transition: opacity 0.3s ease;
-    -o-transition: opacity 0.3s ease;
-    transition: all 0.3s ease;
+	-moz-transition: opacity 0.3s ease;
+	-ms-transition: opacity 0.3s ease;
+	-o-transition: opacity 0.3s ease;
+	transition: all 0.3s ease;
 }
 .cat_menu_container > ul
 {
@@ -1035,10 +1035,10 @@ select option
 {
 	display: inline-block;
 	font-size: 18px;
-    font-weight: 400;
-    color: #FFFFFF;
-    text-transform: uppercase;
-    margin-right: 16px;
+	font-weight: 400;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	margin-right: 16px;
 }
 
 /*********************************
@@ -1049,10 +1049,10 @@ select option
 {
 	margin-top: 15px;
 	-webkit-transition: all 500ms ease;
-    -moz-transition: all 500ms ease;
-    -ms-transition: all 500ms ease;
-    -o-transition: all 500ms ease;
-    transition: all 500ms ease;
+	-moz-transition: all 500ms ease;
+	-ms-transition: all 500ms ease;
+	-o-transition: all 500ms ease;
+	transition: all 500ms ease;
 }
 .page_menu_content
 {
@@ -1210,7 +1210,7 @@ select option
 	left: 0;
 	width: 100%;
 	height: 100%;
-	
+
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
@@ -1655,7 +1655,6 @@ select option
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 	background: #FFFFFF;
-	cursor: pointer;
 	padding-top: 40px;
 	z-index: 0;
 }
@@ -1671,6 +1670,7 @@ select option
 }
 .product_image img
 {
+	cursor: pointer;
 	display: block;
 	position: relative;
 	max-width: 100px;
@@ -1704,7 +1704,7 @@ select option
 .product_name div
 {
 	width: 100%;
-	
+
 }
 .product_name div a
 {
@@ -1759,19 +1759,19 @@ select option
 .product_color input
 {
 	-webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    -o-appearance: none;
-    appearance: none;
-    display: inline-block;
-    position: relative;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 8px;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+	display: inline-block;
+	position: relative;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	font-size: 8px;
 }
 .product_color input:checked::after
 {
@@ -1835,17 +1835,17 @@ select option
 {
 	display: inline-block;
 	width: 15px;
-    height: 15px;
-    border: none;
-    outline: none;
-    padding: 0px;
-    margin: 0px;
-    border-radius: 50%;
-    content: '';
-    background: #e8e8e8;
-    margin-right: 20px;
-    cursor: pointer;
-    -webkit-transition: all 200ms ease;
+	height: 15px;
+	border: none;
+	outline: none;
+	padding: 0px;
+	margin: 0px;
+	border-radius: 50%;
+	content: '';
+	background: #e8e8e8;
+	margin-right: 20px;
+	cursor: pointer;
+	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
 	-ms-transition: all 200ms ease;
 	-o-transition: all 200ms ease;
@@ -1940,7 +1940,7 @@ select option
 }
 .product_marks
 {
-	display: none;
+
 	position: absolute;
 	top: 33px;
 	left: 30px;
@@ -1989,7 +1989,7 @@ select option
 {
 	display: inline-block;
 	visibility: visible;
-	opacity: 1;	
+	opacity: 1;
 }
 
 /*********************************
@@ -2281,17 +2281,17 @@ select option
 {
 	display: inline-block;
 	width: 15px;
-    height: 15px;
-    border: none;
-    outline: none;
-    padding: 0px;
-    margin: 0px;
-    border-radius: 50%;
-    content: '';
-    background: #e8e8e8;
-    margin-right: 20px;
-    cursor: pointer;
-    -webkit-transition: all 200ms ease;
+	height: 15px;
+	border: none;
+	outline: none;
+	padding: 0px;
+	margin: 0px;
+	border-radius: 50%;
+	content: '';
+	background: #e8e8e8;
+	margin-right: 20px;
+	cursor: pointer;
+	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
 	-ms-transition: all 200ms ease;
 	-o-transition: all 200ms ease;
@@ -2427,7 +2427,7 @@ select option
 {
 	margin-top: 9px;
 }
-.arrivals_single_marks 
+.arrivals_single_marks
 {
 	display: block;
 	position: absolute;
@@ -2705,17 +2705,17 @@ select option
 {
 	display: inline-block;
 	width: 15px;
-    height: 15px;
-    border: none;
-    outline: none;
-    padding: 0px;
-    margin: 0px;
-    border-radius: 50%;
-    content: '';
-    background: #e8e8e8;
-    margin-right: 20px;
-    cursor: pointer;
-    -webkit-transition: all 200ms ease;
+	height: 15px;
+	border: none;
+	outline: none;
+	padding: 0px;
+	margin: 0px;
+	border-radius: 50%;
+	content: '';
+	background: #e8e8e8;
+	margin-right: 20px;
+	cursor: pointer;
+	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
 	-ms-transition: all 200ms ease;
 	-o-transition: all 200ms ease;
@@ -3036,7 +3036,7 @@ select option
 .reviews
 {
 	padding-top: 96px;
-	
+
 }
 .reviews_title_container
 {
@@ -3463,9 +3463,9 @@ select option
 {
 	font-size: 16px;
 	color: rgba(0,0,0,0.3);
-} 
+}
 .newsletter_input:-ms-input-placeholder
-{ 
+{
 	font-size: 16px;
 	color: rgba(0,0,0,0.3);
 }
@@ -3621,7 +3621,7 @@ select option
 }
 .footer_list_2
 {
-	margin-top: 42px !important; 
+	margin-top: 42px !important;
 }
 
 .copyright
@@ -3645,7 +3645,7 @@ select option
 }
 .logos
 {
-	
+
 }
 .logos_list li
 {

@@ -37,8 +37,22 @@ export default class shop extends Component {
       
     }
 
+  startSort() {
+    console.log("click");
+      if(this.state.products.product.length >= 1) {
+        this.state.products.product = this.state.products.product.sort((a,b) => {
+          return a.retail_price - b.retail_price;
+        })
+        this.setState({
+          products: this.state.products
+        })
+      }
+    console.log("STATE", this.state.products);
+  }
+
 
     render() {
+    console.log("RENDER");
       return (
         <body>
         <React.Fragment>
@@ -52,44 +66,47 @@ export default class shop extends Component {
         </div>
         </div>
 
-        <div className="container">
+          <div className="container">
             <div className="row">
-        {
-          this.state.products && this.state.products.product &&  this.state.products.product.map((product)=> {
-            return (
-              <div class="product_item is_new" key={product.id} onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}}); 
-                                                                                                    history.go(`/details/${product.id}/`)}}>
-              <div class="product_border"></div>
-              <div class="product_image d-flex flex-column align-items-center justify-content-center">
+              <div className="col-12 p-0 m-2 d-flex justify-content-flex-start align-item-center ml-0 mr-0">
+                <h3 className="m-0 mr-2">Сортировка</h3>
+                <button className="btn btn-primary" onClick={() => this.startSort()}>По цене</button>
+              </div>
+              {
+                this.state.products.product && this.state.products.product.map((product) => {
+                  console.log("2 RENDER");
+                    return (
+                      <div className="product_item is_new" key={product.id}>
+                        <div className="product_border"></div>
+                        <div className="product_image d-flex flex-column align-items-center justify-content-center">
 
-              {product.photo.map((photo) =>{
-                return(
-                  <img src={photo.image} alt=""/>)})}
-              </div>
-              <div class="product_content">
-              <div class="product_price">{product.wholesale_price} сом</div>
-              <div class="product_name"><div><a href="#" tabindex="0">{product.name}</a></div></div>
-              </div>
-             
-              <div>
-                          <button class="button"><a href="">Добавить в корзину</a></button>
+                          <img src={product.photo[0] && product.photo[0].image}/>
                         </div>
-              </div>
-              
+                        <div className="product_content">
+                          <div className="product_price">{product.retail_price} сом</div>
+                          <div className="product_name">
+                            <div><a href="#" tabIndex="0">{product.name}</a></div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <button onClick={() => {
+                            history.push({pathname: `/details/${product.id}/`, state: {proId: product.id}});
+                            history.go(`/details/${product.id}/`)
+                          }} className="button"><a href="">Подробнее</a></button>
+                        </div>
+                      </div>
 
 
-
-              )}
-
-
-
-            )
+                    )
+                  }
+                )
 
 
-        }
+              }
 
-        </div>
-        </div>
+            </div>
+          </div>
       
 
 
