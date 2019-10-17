@@ -1565,10 +1565,10 @@ select option
 }
 .product_discount
 {
-	display: none;
+	
 	background: #df3b3b;
-	visibility: hidden;
-	opacity: 0;
+	visibility: visible;
+	opacity: 1;
 }
 .product_item.is_new .product_new,
 .product_item.discount .product_discount

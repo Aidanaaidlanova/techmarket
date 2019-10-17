@@ -43,13 +43,35 @@ export default class ProductList extends Component {
     })
   }
 
+    startSortDiscount() {
+    const arr = this.state.products.map((item,idx) => {
+      if(item.presence[0]) {
+        return item;
+      }
+    })
+    const arr2 = arr.filter(el => el);
+    const arr3 = this.state.products.map((item,idx) => {
+      if(!item.presence[0]) {
+        return item
+      }
+    });
+    const arr4 = arr3.filter(el => el);
+    const sortedArr = arr2.sort((a,b) => {
+      return a.presence[0].discount - a.presence[0].discount;
+    });
+    const finalArr = [].concat(sortedArr.reverse(),arr4);
+    console.log(finalArr);
+    this.setState({
+      products: finalArr
+    })
+  }
 
   render() {
   
                 
 
     return (
-    <body>
+  
       <React.Fragment>
      
     <Header/>
@@ -70,12 +92,27 @@ export default class ProductList extends Component {
                 </div>
               </div>
             </div>
-
-<div className="container">
+        <div class="shop">    
+        <div className="container">
             <div className="row">
             <div className="col-12 p-0 m-2 d-flex justify-content-flex-start align-item-center ml-0 mr-0">
-              <h3 className="m-0 mr-2">Сортировка</h3>
-              <button className="btn btn-primary" onClick={() => this.startSort()}>По цене</button>
+            <div class="shop_content">
+            <div class="shop_bar clearfix">
+            <div class="shop_sorting">
+                <span>Сортировка:</span>
+                <ul>
+                  <li>
+                    <span class="sorting_text">по цене</span><i class="fas fa-chevron-down"></i>
+                    <ul>
+                      <li class="shop_sorting_button" onClick={() => this.startSort()}>по цене</li>
+                      <li class="shop_sorting_button" onClick={() => this.startSortDiscount()}>по скидке</li>
+                    
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              </div>
+              </div>
             </div>
         {
            this.state.products.map((product)=> {
@@ -91,9 +128,9 @@ export default class ProductList extends Component {
               <div class="product_price">{product.retail_price} сом </div>
               <div class="product_name" ><div><a >{product.name}</a></div ></div>
               </div>
-              <div class="product_fav"></div>
+              <div class="product_fv"></div>
               <ul class="product_marks">
-                  <li class="product_mark product_discount">-25%</li>
+                 {product.presence[0] ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : ""}
                  
                 </ul>
 
@@ -114,13 +151,13 @@ export default class ProductList extends Component {
 
 
         }
-
+        </div>
         </div>
         </div>
       
        <Footer/>
       </React.Fragment>
-    </body>
+    
     
     )
 }

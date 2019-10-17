@@ -5,6 +5,7 @@ import styled from "styled-components";
 import "../styles/bootstrap4/bootstrap.min.css";
 import "../styles/shop_styles.css";
 import "../styles/shop_responsive.css";
+import "../styles/main_styles.css";
 import Header from '../header.js';
 import Footer from '../footer.js';
 import axios from 'axios';
@@ -37,7 +38,41 @@ export default class shop extends Component {
       
     }
 
+    startSort() {
+    console.log("click");
+      if(this.state.products.product.length >= 1) {
+        this.state.products.product = this.state.products.product.sort((a,b) => {
+          return a.retail_price - b.retail_price;
+        })
+        this.setState({
+          products: this.state.products
+        })
+      }
+    console.log("STATE", this.state.products);
+  }
 
+  startSortDiscount() {
+    const arr = this.state.products.product.map((item,idx) => {
+      if(item.presence[0]) {
+        return item;
+      }
+    })
+    const arr2 = arr.filter(el => el);
+    const arr3 = this.state.products.product.map((item,idx) => {
+      if(!item.presence[0]) {
+        return item
+      }
+    });
+    const arr4 = arr3.filter(el => el);
+    const sortedArr = arr2.sort((a,b) => {
+      return a.presence[0].discount - a.presence[0].discount;
+    });
+    const finalArr = [].concat(sortedArr.reverse(),arr4);
+    console.log(finalArr);
+    this.setState({
+      products: finalArr
+    })
+  }
 
     render() {
       return (
@@ -52,9 +87,27 @@ export default class shop extends Component {
         <h2 class="home_title">{this.state.products.name}</h2>
         </div>
         </div>
-
+         <div class="shop"> 
         <div className="container">
             <div className="row">
+             
+               <div class="shop_content">
+            <div class="shop_bar clearfix">
+            <div class="shop_sorting">
+                <span>Сортировка:</span>
+                <ul>
+                  <li>
+                    <span class="sorting_text">по цене</span><i class="fas fa-chevron-down"></i>
+                    <ul>
+                      <li class="shop_sorting_button" onClick={() => this.startSort()}>по цене</li>
+                      <li class="shop_sorting_button" >по скидке</li>
+                    
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              </div>
+              </div>
            
         {
           this.state.products && this.state.products.product &&  this.state.products.product.map((product)=> {
@@ -69,6 +122,11 @@ export default class shop extends Component {
               <div class="product_price">{product.retail_price} сом</div>
               <div class="product_name"><div><a href="#" tabindex="0">{product.name}</a></div></div>
               </div>
+              <div class="product_fv"></div>
+              <ul class="product_marks">
+                 {product.presence[0] ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : ""}
+                 
+                </ul>
              
               <div>
                           <button onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}}); 
@@ -90,8 +148,7 @@ export default class shop extends Component {
 
         </div>
         </div>
-      
-
+      </div>
 
         <Footer/>
         </React.Fragment>
@@ -101,53 +158,4 @@ export default class shop extends Component {
     }
 
 
-    const ProductWrapper = styled.div`
-    .card {
-      border-color: transparent;
-      transition: all 1s linear;
-    }
-    .card-footer {
-      background: transparent;
-      border-top: transparent;
-      transition: all 1s linear;
-    }
-    &:hover {
-      .card {
-        border: 0.04rem solid rgba(0, 0, 0, 0.2);
-        box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.2);
-      }
-      .card-footer {
-        background: rgba(247, 247, 247);
-      }
-    }
-    .img-container {
-      position: relative;
-      overflow: hidden;
-    }
-    .card-img-top {
-      transition: all 1s linear;
-    }
-    .img-container:hover .card-img-top {
-      transform: scale(1.2);
-    }
-    .cart-btn {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      padding: 0.2rem 0.4rem;
-      background: var(--lightBlue);
-      border: none;
-      color: var(--mainWhite);
-      font-size: 1.4rem;
-      border-radius: 0.5rem 0 0 0;
-      transform: translate(100%, 100%);
-      transition: all 1s ease-in-out;
-    }
-    .img-container:hover .cart-btn {
-      transform: translate(0, 0);
-    }
-    .cart-btn:hover {
-      color: var(--mainBlue);
-      cursor: pointer;
-    }
-    `;
+  

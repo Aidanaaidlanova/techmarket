@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Title from "../Title";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import CartColumns from "./CartColumns";
 import CartList from "./CartList";
 import CartTotals from "./CartTotals";
@@ -15,11 +15,7 @@ import "../styles/blog_styles.css";
 import "../styles/cart_styles.css";
 import "../styles/bootstrap4/bootstrap.min.css";
 import "../styles/cart_responsive.css";
-import { createBrowserHistory } from 'history';
-
-const history = createBrowserHistory();
-
-export default class Store extends Component {
+class Store extends Component {
  constructor() {
     super();
     this.state = {
@@ -43,13 +39,15 @@ export default class Store extends Component {
 
   componentDidMount(){
    this.getFromStorage();
+
   }
 
   RemovefromBasket(e) {
     const id = e.target.id;
     localStorage.removeItem(`productNumber${id}`);
     const arr = this.state.productKeys;
-    arr.splice(arr.indexOf(id),1)
+    delete arr.indexOf(id);
+    console.log("DELETED",arr)
     const newArr = JSON.stringify(arr);
     localStorage.removeItem('productKeys');
     localStorage.setItem('productKeys',newArr);
@@ -57,7 +55,8 @@ export default class Store extends Component {
   }
 
   render() {
-    return (
+
+  return (
     <body>
           <Header/>
           <div class="cart_section">
@@ -79,14 +78,39 @@ export default class Store extends Component {
                     <div class="cart_item_name cart_info_col">
                       <div class="cart_item_text">{product.name}</div>
                     </div>
-             
+                    
+
+                    <div class="cart_item_quantity cart_info_col">
+                      
+                      <div class = "cart_item_count">
+            
+              <div >
+                <span
+                  className="btn btn-black mx-1"
+                 
+                  
+                >
+                  -
+                </span>
+                <span className="btn btn-black mx-1">1</span>
+                <span
+                  className="btn btn-black mx-1"
+                 
+                
+                >
+                  +
+                </span>
+              </div>
+            
+        </div>
+                    </div>
                     <div class="cart_item_price cart_info_col">
                     <div id={product.id} className=" cart_item_text trash" onClick={(e) => this.RemovefromBasket(e)}>
                               <i id={product.id} className="fas fa-trash"/>
                     </div>
                     </div>
                     <div class="cart_item_price cart_info_col">
-                      <div class="cart_item_text">{product.retail_price} сом </div>
+                      <div class="cart_item_text">{product.wholesale_price} сом </div>
                     </div>
                     
                   </div>
@@ -102,10 +126,14 @@ export default class Store extends Component {
 
 
         }
-            <div className="cart_buttons">
-            <button className="button cart_button_checkout" onClick ={() => {history.push({pathname:`/order`,state: {prodId: this.state.choice[0].id}}); 
-                                                                                                    history.go(`/order`)}}  >Оформить заказ</button>
-             
+            <div class="cart_buttons">
+             <Link to="/" ><button type="button" class="button cart_button_clear">Назад</button></Link>
+             <Link to={{
+               pathname: '/order',
+               state: {
+                 prodId: this.state.choice.map(id=>id.subcategory.id)
+               }
+             }}> <button type="button" class="button cart_button_checkout">Оформить заказ</button></Link>
             </div>
           </div>
         </div>
@@ -118,3 +146,5 @@ export default class Store extends Component {
     );
   }
 }
+
+export default Store;
