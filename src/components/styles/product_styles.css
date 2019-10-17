@@ -1545,15 +1545,24 @@ select option
 	margin-left: auto;
 }
 .product_price
-{
+{	margin-top: -15px;
 	display: inline-block;
-	font-size: 24px;
+	font-size: 20px;
 	font-weight: 500;
 	clear: left;
+}
+.product_price_discount{
+	margin-top: -15px;
+	font-size: 24px;
+	font-weight: 500;
+	color:#0e8ce4;
 }
 .button_container
 {
 	margin-top: 43px;
+}
+.part{
+	margin-top: 15px;
 }
 .cart_button
 {

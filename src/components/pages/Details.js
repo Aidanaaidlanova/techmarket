@@ -171,15 +171,29 @@ render() {
         <div class="product_text"><p>{product.description}</p></div>
         <div class="order_info d-flex flex-row">
         
-        <form action="#">
+        
         <div class="clearfix">
+
         <div class="product_price">{product.retail_price}сом</div>
+         {product.presence &&  product && product.presence.map((presence) =>{
+            return(
+              <div className = "part">
+                <p>Cо скидкой:</p>
+               <div class="product_price_discount">{presence.price}сом</div>
+              <div className = "part">
+              
+              <p> Цвет: {presence.color.color}</p>
+              <p> В наличии: {presence.count} шт.</p>
+              </div>
+              </div>
+
+              )})}
         <div class="button_container">
          <button type="button" class="cart_button" onClick={() => this.addInBasket()}>В корзину</button>
         <div class="product_fav"><i class="fas fa-heart"></i></div>
         </div>
         </div>
-        </form>
+        
 
         </div>
         </div>

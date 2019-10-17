@@ -80,7 +80,7 @@ export default class ProductList extends Component {
         {
            this.state.products.map((product)=> {
             return (
-              <div class="product_item is_new" key={product.id} >
+              <div class="product_item  discount" key={product.id} >
               <div class="product_border"></div>
               <div class="product_image d-flex flex-column align-items-center justify-content-center">
 
@@ -89,14 +89,17 @@ export default class ProductList extends Component {
               </div>
               <div class="product_content">
               <div class="product_price">{product.retail_price} сом </div>
-              <div class="product_name"><div><a href="#" tabindex="0">{product.name}</a></div></div>
+              <div class="product_name" ><div><a >{product.name}</a></div ></div>
               </div>
+              <div class="product_fav"></div>
               <ul class="product_marks">
                   <li class="product_mark product_discount">-25%</li>
-                  
+                 
                 </ul>
+
               <div>
-                          <button class="button" onClick ={() => {history.push({pathname:`/cart/${product.id}/`,state: {proId: product.id}})}}><a href="">Добавить в корзину</a></button>
+                            <button onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}}); 
+                                                                                                    history.go(`/details/${product.id}/`)}} class="button"><a href="">Подробнее</a></button>
                         </div>
               </div>
               

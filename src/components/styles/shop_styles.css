@@ -1400,7 +1400,6 @@ select option
 	position: relative;
 	width: 20%;
 	background: #FFFFFF;
-	cursor: pointer;
 	padding-top: 40px;
 	padding-bottom: 24px;
 	text-align: center;
@@ -1436,10 +1435,7 @@ select option
 	font-weight: 500;
 	margin-top: 25px;
 }
-.product_item.discount
-{
-	color: #df3b3b;
-}
+
 .product_price span
 {
 	position: relative;

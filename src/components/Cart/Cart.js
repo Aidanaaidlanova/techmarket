@@ -79,39 +79,14 @@ export default class Store extends Component {
                     <div class="cart_item_name cart_info_col">
                       <div class="cart_item_text">{product.name}</div>
                     </div>
-                    
-
-                   {/* <div class="cart_item_quantity cart_info_col">
-                                         
-                                         <div class = "cart_item_count">
-                               
-                                 <div >
-                                   <span
-                                     className="btn btn-black mx-1"
-                                    
-                                     
-                                   >
-                                     -
-                                   </span>
-                                   <span className="btn btn-black mx-1">1</span>
-                                   <span
-                                     className="btn btn-black mx-1"
-                                    
-                                   
-                                   >
-                                     +
-                                   </span>
-                                 </div>
-                               
-                           </div>
-                    </div>*/}
+             
                     <div class="cart_item_price cart_info_col">
                     <div id={product.id} className=" cart_item_text trash" onClick={(e) => this.RemovefromBasket(e)}>
                               <i id={product.id} className="fas fa-trash"/>
                     </div>
                     </div>
                     <div class="cart_item_price cart_info_col">
-                      <div class="cart_item_text">{product.wholesale_price} сом </div>
+                      <div class="cart_item_text">{product.retail_price} сом </div>
                     </div>
                     
                   </div>
@@ -130,9 +105,7 @@ export default class Store extends Component {
             <div className="cart_buttons">
             <button className="button cart_button_checkout" onClick ={() => {history.push({pathname:`/order`,state: {prodId: this.state.choice[0].id}}); 
                                                                                                     history.go(`/order`)}}  >Оформить заказ</button>
-              {/*<button className="button cart_button_checkout" onClick={() => console.log("id",this.state.choice[0].id)}>
-                Оформит заказ
-              </button>*/}
+             
             </div>
           </div>
         </div>

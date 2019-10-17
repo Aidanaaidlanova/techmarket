@@ -16,17 +16,11 @@ export default class Footer extends Component {
 
                                 <div className="footer_title">Остались вопросы?</div>
                                 <div className="footer_phone">+996 705 09 39 59</div>
+                                <div className="footer_phone">techshop@gmail.com</div>
                                 <div className="footer_contact_text">
                                     <p>Бишкек, Байтик баатыра 70</p>
                                 </div>
-                                <div className="footer_social">
-                                    <ul>
-                                        <li><a href="#"><i className="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i className="fab fa-twitter"></i></a></li>
-                                        <li><a href="#"><i className="fab fa-google"></i></a></li>
-
-                                    </ul>
-                                </div>
+                               
                             </div>
                         </div>
 

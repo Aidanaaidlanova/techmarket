@@ -66,7 +66,7 @@ export default class shop extends Component {
                <img src={product.photo[0] && product.photo[0].image } />
               </div>
               <div class="product_content">
-              <div class="product_price">{product.wholesale_price} сом</div>
+              <div class="product_price">{product.retail_price} сом</div>
               <div class="product_name"><div><a href="#" tabindex="0">{product.name}</a></div></div>
               </div>
              
