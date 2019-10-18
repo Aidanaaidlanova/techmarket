@@ -21,7 +21,8 @@ export default class order extends Component {
             email: "alice@mail.com",
             address: "Pushkin st.-22",
             product_list_items: this.props.location.state.prodId.map(one=>{return({
-            product: one, count: 1
+            product: 9 ,
+            count: 1
         })}),
                 comment: "",
                 delivery: 1,
@@ -125,7 +126,27 @@ render() {
                                         name="comment"
                                         onChange={this.handleChange}/>
                           <br/>
-                          <Form.Label></Form.Label>
+                         
+                            <Form.Label as="legend">
+                             Доставка
+                            </Form.Label>
+                            <Col sm={10}>
+                              <Form.Check
+                                type="radio"
+                                label="Доставка курьером"
+                                name="delivery"
+                                value = "1"
+                                onChange={this.handleChange}
+                              />
+                              <Form.Check
+                                type="radio"
+                                label="Самовывоз"
+                                name="delivery"
+                                value = "2"
+                                onChange={this.handleChange}
+                              />
+                            </Col>
+                             
 
                           <Button variant="primary"
                                   type="submit">

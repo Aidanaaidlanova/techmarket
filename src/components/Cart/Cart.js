@@ -25,124 +25,135 @@ class Store extends Component {
  }
 
   getFromStorage() {
-    const productKeys = JSON.parse(localStorage.getItem('productKeys'));
-    const productArr = [];
-    productKeys.map((item,idx) => {
-      productArr.push(JSON.parse(localStorage.getItem(`productNumber${item}`)));
-    })
-    console.log("МАШ МаССИВ ЕБАТЬ", productArr);
-    this.setState({
-      choice: productArr,
-      productKeys: productKeys
-    })
+    if(localStorage.getItem("productKeys") !== null) {
+      const productKeys = JSON.parse(localStorage.getItem("productKeys"));
+      const productChoice = JSON.parse(localStorage.getItem("productChoice"));
+      console.log("KEYS",productKeys);
+      console.log("CHOICE",productChoice);
+      this.setState({
+        productKeys: productKeys,
+        choice: productChoice
+      })
+    }
   }
 
   componentDidMount(){
    this.getFromStorage();
+   console.log(this.state.choice);
+  }
+
+  componentWillMount(){
+    this.getFromStorage();
 
   }
 
   RemovefromBasket(e) {
-    const id = e.target.id;
-    localStorage.removeItem(`productNumber${id}`);
-    const arr = this.state.productKeys;
-    delete arr.indexOf(id);
-    console.log("DELETED",arr)
-    const newArr = JSON.stringify(arr);
-    localStorage.removeItem('productKeys');
-    localStorage.setItem('productKeys',newArr);
-    this.getFromStorage();
+    const id = Number(e.target.id);
+    const local = JSON.parse(localStorage.getItem("productChoice"));
+    localStorage.removeItem("productChoice");
+    console.log("Id". id);
+    const productKeys = this.state.productKeys;
+    const allProduct = this.state.choice;
+    console.log("ID",id);
+    console.log("FIRST",productKeys);
+    console.log("SECOND",allProduct);
+    console.log("Index", productKeys.indexOf(id, 0));
+    console.log("local", local);
+    productKeys.splice(productKeys.indexOf(id, 0),1);
+    let newFilterArr =  [];
+    let newLocal = [];
+    newFilterArr = allProduct.filter(
+    one => id != one.id);
+
+    newLocal =  local.filter(
+      one => {if (id != one.id) {return local.splice(productKeys.indexOf(id, 0),1)}});
+    localStorage.setItem("productChoice", JSON.stringify(newLocal));
+    console.log("DELETED ARR",productKeys);
+    console.log("DELETED Prod",allProduct);
+
+  this.setState({choice: newFilterArr});
+   console.log("FILTER ARR",newFilterArr);
+    console.log("NewLocla ARR",newFilterArr);
   }
 
   render() {
 
   return (
-    <body>
-          <Header/>
-          <div class="cart_section">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-10 offset-lg-1">
-                <div class="cart_container">
-                  <div class="cart_title">Корзина</div>
-                  
+      <body>
+            <Header/>
+            <div class="cart_section">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                  <div class="cart_container">
+                    <div class="cart_title">Корзина</div>
 
-      {
-           this.state.choice && this.state.choice.map((product)=> {
-            return (
-        <div class="cart_items" key={product.id}>
-              <ul class="cart_list">
-                <li class="cart_item clearfix">
-                  <div class="cart_item_image"><img src={product.photo[0] && product.photo[0].image }/></div>
-                  <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-                    <div class="cart_item_name cart_info_col">
-                      <div class="cart_item_text">{product.name}</div>
-                    </div>
-                    
 
-                    <div class="cart_item_quantity cart_info_col">
-                      
-                      <div class = "cart_item_count">
-            
-              <div >
-                <span
-                  className="btn btn-black mx-1"
-                 
-                  
-                >
-                  -
-                </span>
-                <span className="btn btn-black mx-1">1</span>
-                <span
-                  className="btn btn-black mx-1"
-                 
-                
-                >
-                  +
-                </span>
+                    {
+                      this.state.choice && this.state.choice.length ? this.state.choice.map((product)=> {
+                          return (
+                            <div class="cart_items" key={product.id}>
+                              <ul class="cart_list">
+                                <li class="cart_item clearfix">
+                                  <div class="cart_item_image"><img src={product.photo[0] && product.photo[0].image }/></div>
+                                  <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+                                    <div class="cart_item_name cart_info_col">
+                                      <div class="cart_item_text">{product.name}</div>
+                                    </div>
+
+
+                                    <div class="cart_item_quantity cart_info_col">
+
+                                      <div class = "cart_item_count">
+
+                                        <div >
+                <span className="btn btn-black mx-1">-</span>
+                                          <span className="btn btn-black mx-1">1</span>
+                                          <span className="btn btn-black mx-1">+</span>
+                                        </div>
+
+
+                                      </div>
+                                    </div>
+                                    <div class="cart_item_price cart_info_col">
+                                      <div id={product.id} className=" cart_item_text trash" onClick={(e) => this.RemovefromBasket(e)}>
+                                        <i id={product.id} className="fas fa-trash"/>
+                                      </div>
+                                    </div>
+                                    <div class="cart_item_price cart_info_col">
+                                      <div class="cart_item_text">{product.wholesale_price} сом </div>
+                                    </div>
+
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+
+                          )}
+
+
+
+                      ) : <p className={"h2 text-center"}>Корзина пока пуста</p>
+
+
+                    }
+              <div class="cart_buttons">
+               <Link to="/" ><button type="button" class="button cart_button_checkout">Назад</button></Link>
+               <Link to={{
+                 pathname: '/order',
+                 state: {
+                   prodId: this.state.choice && this.state.choice.map(id=>id.subcategory.id)
+                 }
+               }}> <button type="button" class="button cart_button_checkout">Оформить заказ</button></Link>
               </div>
-            
-        </div>
-                    </div>
-                    <div class="cart_item_price cart_info_col">
-                    <div id={product.id} className=" cart_item_text trash" onClick={(e) => this.RemovefromBasket(e)}>
-                              <i id={product.id} className="fas fa-trash"/>
-                    </div>
-                    </div>
-                    <div class="cart_item_price cart_info_col">
-                      <div class="cart_item_text">{product.wholesale_price} сом </div>
-                    </div>
-                    
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-              )}
-
-
-
-            )
-
-
-        }
-            <div class="cart_buttons">
-             <Link to="/" ><button type="button" class="button cart_button_clear">Назад</button></Link>
-             <Link to={{
-               pathname: '/order',
-               state: {
-                 prodId: this.state.choice.map(id=>id.subcategory.id)
-               }
-             }}> <button type="button" class="button cart_button_checkout">Оформить заказ</button></Link>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
- 
-        <Footer/>
-    </body>
+
+          <Footer/>
+      </body>
     );
   }
 }

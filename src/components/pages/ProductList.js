@@ -102,11 +102,10 @@ export default class ProductList extends Component {
                 <span>Сортировка:</span>
                 <ul>
                   <li>
-                    <span class="sorting_text">по цене</span><i class="fas fa-chevron-down"></i>
+                    <span class="sorting_text"> по .....</span><i class="fas fa-chevron-down"></i>
                     <ul>
                       <li class="shop_sorting_button" onClick={() => this.startSort()}>по цене</li>
                       <li class="shop_sorting_button" onClick={() => this.startSortDiscount()}>по скидке</li>
-                    
                     </ul>
                   </li>
                 </ul>
@@ -130,7 +129,8 @@ export default class ProductList extends Component {
               </div>
               <div class="product_fv"></div>
               <ul class="product_marks">
-                 {product.presence[0] ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : ""}
+               
+                 {product.presence.map(a=>a.discount > 0 ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : "")}
                  
                 </ul>
 
