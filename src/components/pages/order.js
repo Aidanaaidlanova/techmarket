@@ -21,9 +21,10 @@ export default class order extends Component {
             phone: "+996555444111",
             email: "alice@mail.com",
             address: "Pushkin st.-22",
-            product_list_items: this.props.location.state.prodId.map(one=>{return({
-            product: one, count: 1
-        })}),
+            product_list_items: {
+                product: this.props.location.state.prodId.map(one=>one),
+                count: this.props.location.state.countProd.map(one=>one),
+            },
                 comment: "",
                 delivery: 1,
                 total_sum: "10000"
@@ -32,8 +33,10 @@ export default class order extends Component {
     }
 
     componentDidMount () {
+        console.log("Location", this.props.location.state);
         console.log(this.state.product_list_items);
         console.log(this.props.location.state.prodId);
+        console.log(this.props.location.state.countProd);
     }
 
     handleChange = event => {
