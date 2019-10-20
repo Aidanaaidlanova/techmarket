@@ -16,6 +16,8 @@ import "../styles/cart_styles.css";
 import "../styles/bootstrap4/bootstrap.min.css";
 import "../styles/cart_responsive.css";
 import {forEach} from "react-bootstrap/utils/ElementChildren";
+import { createBrowserHistory } from 'history';
+const history = createBrowserHistory();
 class Store extends Component {
  constructor() {
     super();
@@ -75,31 +77,32 @@ class Store extends Component {
     this.getFromStorage();
   }
 
-  incrementCount(e) {
-    const target = Number(e.target.id);
-    let el = document.getElementsByClassName("btn btn-black mx-1 plus");
-    let name;
+  isUnique(array, propertyName) {
+   let result = array.filter((e, i) => array.findIndex(a => a[propertyName] === e[propertyName]) === i);
+   this.setState({
+     count: result,
+   });
+   localStorage.setItem("products", JSON.stringify(result));
+    history.push('/order');
+    history.go('/order');
+  };
+
+  inputChange(e) {
+    const value = Number(e.target.value);
+    const id = Number(e.target.id);
+    const count = this.state.count;
     const product = this.state.choice;
-    const prodKeys = this.state.productKeys;
-    console.log(el);
-    let amount;
-    let arrCount;
-
     for(let i = 0; i < product.length; i++) {
-        name = document.getElementsByName(product[i].name);
-        if (product[i].id === target && target === Number(el[i].id) ) {
-          amount = Number( el[i].innerHTML);
-
-          amount++;
-          this.state.count.push(amount);
-          arrCount = this.state.count;
-          console.log("el", el[i].name);
-          el[i].innerHTML = String(amount);
-        }
-
+      if(id === product[i].id) {
+        count.push({
+          product: product[i].presence[0].id,
+          count: value
+        })
+      }
     }
-    this.setState({count: arrCount});
-    console.log(this.state.count);
+    this.setState({
+      count: count,
+    })
   }
 
   render() {
@@ -125,7 +128,7 @@ class Store extends Component {
                                   <div class="cart_item_image"><img src={product.photo[0] && product.photo[0].image }/></div>
                                   <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                     <div class="cart_item_name cart_info_col">
-                                      <div class="cart_item_text">{product.name}</div>
+                                      <div class="cart_item_text cart_item_text_name">{product.name}</div>
                                     </div>
 
 
@@ -134,12 +137,13 @@ class Store extends Component {
                                       <div class = "cart_item_count">
 
                                         <div >
-                                          <span
-                                            className="btn btn-black mx-1"
-                                            id={product.presence[0].id}>-</span>
-                                          <span className="btn btn-black mx-1 plus" id={product.id} name={product.name}>{1}</span>
-                                          <span onClick={e => this.incrementCount(e)} id={product.id}
-                                            className="btn btn-black mx-1">+</span>
+                                          <input
+                                            className="btn btn-black mx-1 plus"
+                                            onChange={e => this.inputChange(e)}
+                                            id={product.id}
+                                            type={"number"}
+                                            name={product.name}
+                                            id={product.id}/>
                                         </div>
 
                                       </div>
@@ -168,13 +172,11 @@ class Store extends Component {
                     }
               <div class="cart_buttons">
                <Link to="/" ><button type="button" class="button cart_button_clear">Назад</button></Link>
-               <Link to={{
-                 pathname: '/order',
-                 state: {
-                   prodId: this.state.choice && this.state.choice.map(id=>id.subcategory.id),
-                   countProd: this.state.count && this.state.count
-                 }
-               }}> <button type="button" class="button cart_button_checkout">Оформить заказ</button></Link>
+                 <button type="button"
+                         class="button cart_button_checkout"
+                         onClick={() => this.isUnique(this.state.count.reverse(),'product')}>
+                   Оформить заказ
+                 </button>
               </div>
             </div>
           </div>

@@ -22,8 +22,8 @@ export default class order extends Component {
             email: "alice@mail.com",
             address: "Pushkin st.-22",
             product_list_items: {
-                product: this.props.location.state.prodId.map(one=>one),
-                count: this.props.location.state.countProd.map(one=>one),
+                product: 0,
+                count: 0
             },
                 comment: "",
                 delivery: 1,
@@ -33,10 +33,13 @@ export default class order extends Component {
     }
 
     componentDidMount () {
-        console.log("Location", this.props.location.state);
-        console.log(this.state.product_list_items);
-        console.log(this.props.location.state.prodId);
-        console.log(this.props.location.state.countProd);
+        const local = JSON.parse(localStorage.getItem('products'));
+        this.setState({
+            product_list_items: {
+                product: local.map(item => item.product),
+                count: local.map(item => item.count)
+            }
+        })
     }
 
     handleChange = event => {
