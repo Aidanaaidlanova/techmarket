@@ -44,26 +44,37 @@ export default class ProductList extends Component {
   }
 
   startSortDiscount() {
-    const arr = this.state.products.map((item,idx) => {
-      if(item.presence[0]) {
-        return item;
-      }
-    })
-    const arr2 = arr.filter(el => el);
-    const arr3 = this.state.products.map((item,idx) => {
-      if(!item.presence[0]) {
-        return item
-      }
-    });
-    const arr4 = arr3.filter(el => el);
-    const sortedArr = arr2.sort((a,b) => {
-      return a.presence[0].discount - a.presence[0].discount;
-    });
-    const finalArr = [].concat(sortedArr.reverse(),arr4);
-    console.log(finalArr);
+    const arr = this.state.products;
+        
+    let finalArr= arr.sort((a,b)=>b.presence.map(pre=>pre.discount)-a.presence.map(dis=>dis.discount));
+    
     this.setState({
       products: finalArr
-    })
+    });
+    
+    // let discountArr= arr.map(a=>console.log(a.presence));
+    // let filterArr = arr.sort(pre=>pre.presence.map((a,b)=>a.discount-b.discount));
+    // console.log(filterArr);
+    // const arr = this.state.products.map((item,idx) => {
+    //   if(item.presence[0]) {
+    //     return item;
+    //   }
+    // })
+    // const arr2 = arr.filter(el => el);
+    // const arr3 = this.state.products.map((item,idx) => {
+    //   if(!item.presence[0]) {
+    //     return item
+    //   }
+    // });
+    // const arr4 = arr3.filter(el => el);
+    // const sortedArr = arr2.sort((a,b) => {
+    //   return a.presence[0].discount - a.presence[0].discount;
+    // });
+    // const finalArr = [].concat(sortedArr.reverse(),arr4);
+    // console.log(finalArr);
+    // this.setState({
+    //   products: finalArr
+    // })
   }
 
 
@@ -117,7 +128,9 @@ export default class ProductList extends Component {
                     </div>
                     <div class="product_fav"></div>
                     <ul class="product_marks">
-                      {product.presence[0] ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : ""}
+                      {console.clear()}
+                    {product.presence.map(a=>console.log(a.discount))}
+                      {product.presence.map(a=>a.discount>0 ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : "")}
                     </ul>
 
                     <div>
