@@ -44,26 +44,13 @@ export default class ProductList extends Component {
   }
 
     startSortDiscount() {
-    const arr = this.state.products.map((item,idx) => {
-      if(item.presence[0]) {
-        return item;
-      }
-    })
-    const arr2 = arr.filter(el => el);
-    const arr3 = this.state.products.map((item,idx) => {
-      if(!item.presence[0]) {
-        return item
-      }
-    });
-    const arr4 = arr3.filter(el => el);
-    const sortedArr = arr2.sort((a,b) => {
-      return a.presence[0].discount - a.presence[0].discount;
-    });
-    const finalArr = [].concat(sortedArr.reverse(),arr4);
-    console.log(finalArr);
+    const arr = this.state.products;
+        
+    let finalArr= arr.sort((a,b)=>b.presence.map(pre=>pre.discount)-a.presence.map(dis=>dis.discount));
+    
     this.setState({
       products: finalArr
-    })
+    });
   }
 
   render() {
@@ -124,7 +111,10 @@ export default class ProductList extends Component {
                                                                                                     history.go(`/details/${product.id}/`)}}/>
               </div>
               <div class="product_content">
-              <div class="product_price">{product.retail_price} сом </div>
+               {product.presence &&  product && product.presence.map((presence) =>{
+            return(
+              <div class="product_price">{presence.price} сом </div>
+               )})}
               <div class="product_name" ><div><a >{product.name}</a></div ></div>
               </div>
               <div class="product_fv"></div>

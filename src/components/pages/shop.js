@@ -51,27 +51,15 @@ export default class shop extends Component {
     console.log("STATE", this.state.products);
   }
 
-  startSortDiscount() {
-    const arr = this.state.products.product.map((item,idx) => {
-      if(item.presence[0]) {
-        return item;
-      }
-    })
-    const arr2 = arr.filter(el => el);
-    const arr3 = this.state.products.product.map((item,idx) => {
-      if(!item.presence[0]) {
-        return item
-      }
-    });
-    const arr4 = arr3.filter(el => el);
-    const sortedArr = arr2.sort((a,b) => {
-      return a.presence[0].discount - a.presence[0].discount;
-    });
-    const finalArr = [].concat(sortedArr.reverse(),arr4);
-    console.log(finalArr);
+
+startSortDiscount() {
+    
+        
+    this.state.products.product = this.state.products.product.sort((a,b)=>b.presence.map(pre=>pre.discount)-a.presence.map(dis=>dis.discount));
+    
     this.setState({
-      products: finalArr
-    })
+      products: this.state.products
+    });
   }
 
     render() {
@@ -97,10 +85,10 @@ export default class shop extends Component {
                 <span>Сортировка:</span>
                 <ul>
                   <li>
-                    <span class="sorting_text">по цене</span><i class="fas fa-chevron-down"></i>
+                    <span class="sorting_text">по ...</span><i class="fas fa-chevron-down"></i>
                     <ul>
                       <li class="shop_sorting_button" onClick={() => this.startSort()}>по цене</li>
-                      <li class="shop_sorting_button" >по скидке</li>
+                      <li class="shop_sorting_button" onClick={() => this.startSortDiscount()}>по скидке</li>
                     
                     </ul>
                   </li>
@@ -118,13 +106,15 @@ export default class shop extends Component {
 
                <img src={product.photo[0] && product.photo[0].image } />
               </div>
-              <div class="product_content">
-              <div class="product_price">{product.retail_price} сом</div>
+              <div class="product_content">{product.presence &&  product && product.presence.map((presence) =>{
+            return(
+              <div class="product_price">{presence.price} сом </div>
+               )})}
               <div class="product_name"><div><a href="#" tabindex="0">{product.name}</a></div></div>
               </div>
               <div class="product_fv"></div>
               <ul class="product_marks">
-                 {product.presence[0] ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : ""}
+                  {product.presence.map(a=>a.discount > 0 ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : "")}
                  
                 </ul>
              

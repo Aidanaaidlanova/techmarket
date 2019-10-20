@@ -80,10 +80,17 @@ class Search extends Component {
 
                <img src={product.photo[0] && product.photo[0].image } />
               </div>
-              <div class="product_content">
-              <div class="product_price">{product.wholesale_price} сом</div>
+              <div class="product_content">{product.presence &&  product && product.presence.map((presence) =>{
+            return(
+              <div class="product_price">{presence.price} сом </div>
+               )})}
               <div class="product_name"><div><a href="#" tabindex="0">{product.name}</a></div></div>
               </div>
+              <div class="product_fv"></div>
+              <ul class="product_marks">
+                  {product.presence.map(a=>a.discount > 0 ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : "")}
+                 
+                </ul>
              
               <div>
                           <button onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}}); 

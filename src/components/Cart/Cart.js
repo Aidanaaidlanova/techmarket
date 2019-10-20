@@ -121,7 +121,10 @@ class Store extends Component {
                                       </div>
                                     </div>
                                     <div class="cart_item_price cart_info_col">
-                                      <div class="cart_item_text">{product.wholesale_price} сом </div>
+                                    {product.presence &&  product && product.presence.map((presence) =>{
+            return(
+                                      <div class="cart_item_text">{presence.price} сом </div>
+                                       )})}
                                     </div>
 
                                   </div>
