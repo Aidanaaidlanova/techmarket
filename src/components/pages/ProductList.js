@@ -50,7 +50,7 @@ export default class ProductList extends Component {
 
     this.setState({
       products: finalArr
-    });
+    })
   }
 
 
@@ -104,7 +104,9 @@ export default class ProductList extends Component {
                     </div>
                     <div class="product_fav"></div>
                     <ul class="product_marks">
-                      {product.presence[0] ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : ""}
+                      {console.clear()}
+                    {product.presence.map(a=>console.log(a.discount))}
+                      {product.presence.map(a=>a.discount>0 ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : "")}
                     </ul>
 
                     <div>
