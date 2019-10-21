@@ -1,3 +1,4 @@
+
 import React, {Component} from "react";
 import "../plugins/fontawesome-free-5.0.1/css/fontawesome-all.css";
 import "../styles/bootstrap4/bootstrap.min.css";
@@ -20,10 +21,10 @@ export default class order extends Component {
             phone: "+996555444111",
             email: "alice@mail.com",
             address: "Pushkin st.-22",
-            product_list_items: this.props.location.state.prodId.map(one=>{return({
-            product: 9 ,
-            count: 1
-        })}),
+            product_list_items: [{
+                product: 0,
+                count: 0
+            }],
                 comment: "",
                 delivery: 1,
                 total_sum: "10000"
@@ -32,8 +33,13 @@ export default class order extends Component {
     }
 
     componentDidMount () {
-        console.log(this.state.product_list_items);
-        console.log(this.props.location.state.prodId);
+        const local = JSON.parse(localStorage.getItem('products'));
+        this.setState({
+            product_list_items: {
+                product: local.map(item => item.product),
+                count: local.map(item => item.count)
+            }
+        })
     }
 
     handleChange = event => {
@@ -107,6 +113,7 @@ render() {
                                         onChange={this.handleChange}/>
                           <br/>
 
+                          Aidlanova Aidana, [16.10.19 23:53]
                           <Form.Label>Адрес</Form.Label>
                           <Form.Control type="text"
                                         placeholder="ул. Чехова д.5 кв.87"
@@ -126,27 +133,7 @@ render() {
                                         name="comment"
                                         onChange={this.handleChange}/>
                           <br/>
-                         
-                            <Form.Label as="legend">
-                             Доставка
-                            </Form.Label>
-                            <Col sm={10}>
-                              <Form.Check
-                                type="radio"
-                                label="Доставка курьером"
-                                name="delivery"
-                                value = "1"
-                                onChange={this.handleChange}
-                              />
-                              <Form.Check
-                                type="radio"
-                                label="Самовывоз"
-                                name="delivery"
-                                value = "2"
-                                onChange={this.handleChange}
-                              />
-                            </Col>
-                             
+                          <Form.Label></Form.Label>
 
                           <Button variant="primary"
                                   type="submit">
