@@ -8,6 +8,10 @@
 # testing
 /coverage
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> fe04eae61fc9d5d37d9a072b5e8f05acec072b1a
 
 # misc
 .DS_Store
