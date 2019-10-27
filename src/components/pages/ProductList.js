@@ -50,16 +50,15 @@ export default class ProductList extends Component {
 
     this.setState({
       products: finalArr
-    })
+    });
   }
-
 
   render() {
 
 
 
     return (
-      <body>
+
       <React.Fragment>
 
         <Header/>
@@ -80,61 +79,75 @@ export default class ProductList extends Component {
             </div>
           </div>
         </div>
-
-        <div className="container">
-          <div className="row">
-            <div className="col-12 p-0 m-2 d-flex justify-content-flex-start align-item-center ml-0 mr-0">
-              <h3 className="m-0 mr-2">Сортировка</h3>
-              <button className="btn btn-primary" onClick={() => this.startSort()}>По цене</button>
-              <button className="btn btn-primary" onClick={() => this.startSortDiscount()}>По скидке</button>
-            </div>
-            {
-              this.state.products[0] && this.state.products && this.state.products.map((product)=> {
-                return (
-                  <div class="product_item  discount" key={product.id} >
-                    <div class="product_border"></div>
-                    <div class="product_image d-flex flex-column align-items-center justify-content-center">
-
-                      <img src={product.photo[0] && product.photo[0].image } alt="" onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}});
-                        history.go(`/details/${product.id}/`)}}/>
-                    </div>
-                    <div class="product_content">
-                      <div class="product_price">{product.retail_price} сом </div>
-                      <div class="product_name"><div><a href="#" tabindex="0">{product.name}</a></div></div>
-                    </div>
-                    <div class="product_fav"></div>
-                    <ul class="product_marks">
-                      {console.clear()}
-                    {product.presence.map(a=>console.log(a.discount))}
-                      {product.presence.map(a=>a.discount>0 ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : "")}
-                    </ul>
-
-                    <div>
-                      <button onClick={() => {
-                        history.push({pathname: `/details/${product.id}/`, state: {proId: product.id}});
-                        history.go(`/details/${product.id}/`)
-                      }} className="button"><a href="">Подробнее</a></button>
+        <div class="shop">
+          <div className="container">
+            <div className="row">
+              <div className="col-12 p-0 m-2 d-flex justify-content-flex-start align-item-center ml-0 mr-0">
+                <div class="shop_content">
+                  <div class="shop_bar clearfix">
+                    <div class="shop_sorting">
+                      <span>Сортировка:</span>
+                      <ul>
+                        <li>
+                          <span class="sorting_text"> по .....</span><i class="fas fa-chevron-down"></i>
+                          <ul>
+                            <li class="shop_sorting_button" onClick={() => this.startSort()}>по цене</li>
+                            <li class="shop_sorting_button" onClick={() => this.startSortDiscount()}>по скидке</li>
+                          </ul>
+                        </li>
+                      </ul>
                     </div>
                   </div>
+                </div>
+              </div>
+              {
+                this.state.products.map((product)=> {
+                  return (
+                    <div class="product_item  discount" key={product.id} >
+                      <div class="product_border"></div>
+                      <div class="product_image d-flex flex-column align-items-center justify-content-center">
+
+                        <img src={product.photo[0] && product.photo[0].image } alt="" onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}});
+                          history.go(`/details/${product.id}/`)}}/>
+                      </div>
+                      <div class="product_content">
+                        {product.presence &&  product && product.presence.map((presence) =>{
+                          return(
+                            <div class="product_price">{presence.price} сом </div>
+                          )})}
+                        <div class="product_name" ><div><a >{product.name}</a></div ></div>
+                      </div>
+                      <div class="product_fv"></div>
+                      <ul class="product_marks">
+
+                        {product.presence.map(a=>a.discount > 0 ? <li className="product_mark product_discount">-{product.presence[0].discount}%</li> : "")}
+
+                      </ul>
+
+                      <div>
+                        <button onClick ={() => {history.push({pathname:`/details/${product.id}/`,state: {proId: product.id}});
+                          history.go(`/details/${product.id}/`)}} class="button"><a href="">Подробнее</a></button>
+                      </div>
+                    </div>
 
 
 
 
-                )}
+                  )}
 
 
 
-              )
+                )
 
 
-            }
-
+              }
+            </div>
           </div>
         </div>
 
         <Footer/>
       </React.Fragment>
-      </body>
+
 
     )
   }

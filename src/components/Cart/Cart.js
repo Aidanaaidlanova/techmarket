@@ -103,6 +103,13 @@ class Store extends Component {
     this.setState({
       count: count,
     })
+    this.sumOfCount(e);
+  }
+
+  sumOfCount(e) {
+    let elem = document.getElementById(e.target.id).parentNode.parentNode.parentNode.parentNode;
+    let elem2 = elem.querySelectorAll('.cart_item_text_for_price');
+    elem2[0].innerText = Number(e.target.value) * Number(elem2[0].innerText.replace(" сом","")) + ' сом';
   }
 
   render() {
@@ -138,7 +145,7 @@ class Store extends Component {
 
                                         <div >
                                           <input
-                                            className="btn btn-black mx-1 plus"
+                                            className={"btn btn-black mx-1 plus " + idx}
                                             onChange={e => this.inputChange(e)}
                                             id={product.id}
                                             type={"number"}
@@ -154,7 +161,7 @@ class Store extends Component {
                                       </div>
                                     </div>
                                     <div class="cart_item_price cart_info_col">
-                                      <div class="cart_item_text">{product.wholesale_price} сом </div>
+                                      <div class="cart_item_text cart_item_text_for_price">{product.retail_price} сом</div>
                                     </div>
 
                                   </div>
@@ -191,3 +198,24 @@ class Store extends Component {
 }
 
 export default Store;
+
+
+// let elem = document.querySelectorAll(".cart_items");
+// let elems;
+// let anotherElems;
+// let className;
+// console.clear()
+// elem.forEach((item,idx) => {
+//   elems = item.getElementsByTagName('input');
+//   anotherElems = item.getElementsByClassName("cart_item_text cart_item_text_for_price");
+//   className = elems[0].className;
+//   console.log('input ' + elems[0].value);
+//   console.log('class ' + className[className.length - 1], idx);
+//   console.log('div ' + anotherElems[0].innerHTML);
+//   console.log(anotherElems[0].innerHTML)
+//   if(className[className.length - 1] == idx) {
+//     console.log('sex');
+//   }
+// });
+// return elems;
+// (Number(anotherElems[0].innerText.replace(" сом","")) * Number(elems[0].value))

@@ -1,11 +1,8 @@
-
 @charset "utf-8";
 /* CSS Document */
 
 /******************************
-
 [Table of Contents]
-
 1. Fonts
 2. Body and some general stuff
 3. Header
@@ -29,8 +26,6 @@
 15. Brands
 16. Newsletter
 17. Footer
-
-
 ******************************/
 
 /***********
@@ -1685,7 +1680,7 @@ select option
 	font-weight: 500;
 	margin-top: 25px;
 }
-.product_price.discount
+.price.discount
 {
 	color: #df3b3b;
 }
@@ -1979,10 +1974,10 @@ select option
 }
 .product_discount
 {
-	display: none;
+
 	background: #df3b3b;
-	visibility: hidden;
-	opacity: 0;
+	visibility: visible;
+	opacity: 1;
 }
 .product_item.is_new .product_new,
 .product_item.discount .product_discount
