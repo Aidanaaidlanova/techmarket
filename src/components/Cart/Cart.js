@@ -109,7 +109,11 @@ class Store extends Component {
   sumOfCount(e) {
     let elem = document.getElementById(e.target.id).parentNode.parentNode.parentNode.parentNode;
     let elem2 = elem.querySelectorAll('.cart_item_text_for_price');
-    elem2[0].innerText = Number(e.target.value) * Number(elem2[0].innerText.replace(" сом","")) + ' сом';
+    this.state.choice.map((item,idx) => {
+      if(e.target.id == idx) {
+        elem2[0].innerText = Number(e.target.value) * Number(item.presence[0].price) + " сом"
+      }
+    });
   }
 
   render() {
@@ -150,7 +154,7 @@ class Store extends Component {
                                             id={product.id}
                                             type={"number"}
                                             name={product.name}
-                                            id={product.id}/>
+                                            id={idx}/>
                                         </div>
 
                                       </div>
